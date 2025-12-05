@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
         $comments = Comment::factory(100)->recycle($users)->recycle($posts)->create();
 
         User::factory()
-        ->has(Post::factory(45))
-        ->has(Comment::factory(120)->recycle($posts))
-        ->create([
-            'name' => 'Abdo',
-            'email' => 'test@example.com',
-        ]);
+            ->has(Post::factory(45))
+            ->has(Comment::factory(120)->recycle($posts))
+            ->create([
+                'name' => 'Abdo',
+                'email' => 'aboodabdallah38@gmail.com',
+            ]);
     }
 }
