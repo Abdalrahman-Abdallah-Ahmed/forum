@@ -14,4 +14,14 @@ class PostController extends Controller
             'posts' => PostResource::collection(Post::paginate())
         ]);
     }
+
+        public function show(Post $post)
+    {
+        // dd($post);
+        $post->load('user');
+
+        return inertia('Posts/Show', [
+            'post' => PostResource::make($post)
+        ]);
+    }
 }
