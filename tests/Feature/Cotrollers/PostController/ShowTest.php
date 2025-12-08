@@ -20,4 +20,4 @@ it('passes a post to the view', function(){
     $response = $this->get(route('posts.show', $post));
 
     $response->assertHasResource('post', PostResource::make($post));
-})->only();
+});
