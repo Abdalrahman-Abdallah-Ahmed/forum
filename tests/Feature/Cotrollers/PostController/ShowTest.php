@@ -32,4 +32,4 @@ it('passes comments to the view', function () {
 
     $this->get(route('posts.show', $post))
         ->assertHasPaginatedResource('comments', CommentResource::collection($comments->reverse()));
-})->only();
+});
