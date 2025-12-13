@@ -26,8 +26,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()
             ->has(
-                Post::factory(5)->has(Comment::factory(120)->recycle($posts))
-                    ->has(Comment::factory(15)->recycle($users))
+                Post::factory(5)->has(Comment::factory(15)->recycle($posts))
             )
             ->create([
                 'name' => 'Abdo',
