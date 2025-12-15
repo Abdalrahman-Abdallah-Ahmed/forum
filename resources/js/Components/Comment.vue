@@ -6,14 +6,9 @@
                     :src="comment.user.profile_photo_url" alt="" />
                 <div class="min-w-0 flex-auto">
                     <p class="mt-1 truncate text-xs/5 text-gray-400">{{ comment.user.email }}</p>
-<<<<<<< HEAD
-                    <span class="text-sm break-all">{{ comment.body }}</span>
-=======
                     <span class="text-sm">{{ comment.body }}</span>
->>>>>>> cd33110158addfba940ebe85ba2ca5719b464f48
                     <span class="block mt-1 text-xs text-gray-600 ">By {{ comment.user.name }} {{
                         relativeDate(comment.created_at) }}</span>
-
                 </div>
             </div>
         </li>

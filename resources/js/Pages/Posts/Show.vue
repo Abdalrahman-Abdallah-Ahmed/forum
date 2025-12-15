@@ -9,7 +9,6 @@
             </article>
             <div class="mt-12">
                 <h2 class="text-xl font-semibold">Comments</h2>
-<<<<<<< HEAD
                 <form v-if="$page.props.auth.user" @submit.prevent="addComment" class="mt-4">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
@@ -19,18 +18,12 @@
                     <PrimaryButton type="submit" class="mt-3" :disabled="commentForm.processing">Add Comment
                     </PrimaryButton>
                 </form>
-=======
->>>>>>> cd33110158addfba940ebe85ba2ca5719b464f48
                 <ul class="divide-y mt-4">
                     <li v-for="comment in comments.data" :key="comment.id" class=" px-2 py-4">
                         <Comment :comment="comment"></Comment>
                     </li>
                 </ul>
-<<<<<<< HEAD
                 <Pagination :meta="comments.meta" :only="['comments']" />
-=======
-                <Pagination :meta="comments.meta" :only="['comments']"/>
->>>>>>> cd33110158addfba940ebe85ba2ca5719b464f48
             </div>
         </Container>
 
@@ -42,19 +35,14 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Container from '@/Components/Container.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Comment from '@/Components/Comment.vue';
-<<<<<<< HEAD
 import InputLabel from '@/Components/InputLabel.vue';
 import TextArea from '@/Components/TextArea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
-import { computed } from 'vue';
-import { relativeDate } from '@/utilities/date';
 import { useForm } from '@inertiajs/vue3';
-=======
 import { computed } from 'vue';
 import { formatDistance, parseISO } from 'date-fns';
 import { relativeDate } from '@/utilities/date';
->>>>>>> cd33110158addfba940ebe85ba2ca5719b464f48
 
 const props = defineProps([
     'post',
@@ -63,7 +51,6 @@ const props = defineProps([
 
 const formattedDate = computed(() => relativeDate(props.post.created_at));
 
-<<<<<<< HEAD
 const commentForm = useForm({
     body: '',
 })
@@ -74,6 +61,3 @@ const addComment = () => commentForm.post(route('posts.comments.store', props.po
 });
 
 </script>
-=======
-</script>
->>>>>>> cd33110158addfba940ebe85ba2ca5719b464f48

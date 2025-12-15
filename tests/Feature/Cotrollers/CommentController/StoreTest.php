@@ -5,6 +5,11 @@ use App\Models\Post;
 use App\Models\User;
 use function Pest\Laravel\actingAs;
 
+it('requires authentication', function () {
+    $this->post(route('posts.comments.store', Post::factory()->create()))
+        ->assertRedirect(route('login'));
+})->only();
+
 it('can store a comment', function () {
     $user = User::factory()->create();
 
@@ -44,10 +49,9 @@ it('requires a valid body', function ($value) {
 
     $response->assertInvalid(['body']);
 })->with([
-    null,
-    1,
-    2.5,
-    true,
-    str_repeat('a', 2501),
-])
-->only();
+            null,
+            1,
+            2.5,
+            true,
+            str_repeat('a', 2501),
+        ]);
