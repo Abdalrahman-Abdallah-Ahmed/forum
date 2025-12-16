@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CommentController extends Controller
 {
+    use AuthorizesRequests;
     public function store(Request $request, Post $post)
     {
         // dd($request->all());
@@ -21,5 +23,14 @@ class CommentController extends Controller
             ->save();
 
         return redirect()->route('posts.show', $post);
+    }
+
+    public function destroy(Request $request, Comment $comment)
+    {   
+        $this->authorize('delete', $comment);
+
+        $comment->delete();
+
+        return redirect()->route('posts.show', $comment->post);
     }
 }

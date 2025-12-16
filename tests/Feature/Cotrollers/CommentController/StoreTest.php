@@ -8,7 +8,7 @@ use function Pest\Laravel\actingAs;
 it('requires authentication', function () {
     $this->post(route('posts.comments.store', Post::factory()->create()))
         ->assertRedirect(route('login'));
-})->only();
+});
 
 it('can store a comment', function () {
     $user = User::factory()->create();
