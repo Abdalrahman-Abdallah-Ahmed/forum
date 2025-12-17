@@ -11,11 +11,11 @@ it('requires authentication', function () {
 it('can delete a comment', function () {
     $comment = Comment::factory()->create();
 
-    $response = $this
+    $this
     ->actingAs($comment->user)
     ->delete(route('comments.destroy', $comment));
-
-    $response->assertDatabaseMissing('comments', ['id' => $comment->id]);
+    $this
+    ->assertDatabaseMissing('comments', ['id' => $comment->id]);
 });
 
 it('redirects to post page', function(){
@@ -36,4 +36,18 @@ it('prevents unauthorized deletion', function(){
     ->delete(route('comments.destroy', $comment->id));
 
     $response->assertForbidden();
-})->only();
+});
+
+it('prevents deleting a comment from one hour ago', function(){
+    $this->freezeTime();
+
+    $comment = Comment::factory()->create();
+
+    $this->travel(1)->hour();
+
+    $response = $this
+    ->actingAs($comment->user)
+    ->delete(route('comments.destroy', $comment->id));
+
+    $response->assertForbidden();
+});
