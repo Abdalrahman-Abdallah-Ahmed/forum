@@ -10,6 +10,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class CommentController extends Controller
 {
     use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Comment::class);
+    }
     public function store(Request $request, Post $post)
     {
         // dd($request->all());
@@ -26,11 +31,19 @@ class CommentController extends Controller
     }
 
     public function destroy(Request $request, Comment $comment)
-    {   
-        $this->authorize('delete', $comment);
-
+    {
         $comment->delete();
 
+        return redirect()->route('posts.show', ['post' => $comment->post, 'page' => $request->query('page')]);
+    }
+
+    public function update(Request $request, Comment $comment)
+    {
+        $date = $request->validate(([
+            'body' => 'required|string|max:2500',
+        ]));
+
+        $comment->update($date);
         return redirect()->route('posts.show', ['post' => $comment->post, 'page' => $request->query('page')]);
     }
 }
