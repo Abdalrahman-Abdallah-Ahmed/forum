@@ -52,6 +52,7 @@ import { computed } from 'vue';
 import { relativeDate } from '@/utilities/date';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { useConfirm } from '@/utilities/Composables/useConfirm';
 
 const props = defineProps([
     'post',
@@ -82,12 +83,21 @@ const cancelEditComment = () => {
     commentForm.reset('body');
 };
 
+const { confirmation } = useConfirm();
+
 const addComment = () => commentForm.post(route('posts.comments.store', props.post.id), {
     preserveScroll: true,
     onSuccess: () => commentForm.reset('body'),
 });
 
-const updateComment = () => commentForm.put
+const updateComment = async () => {
+    if (! await confirmation('Are you sure you want to update this comment?')) {
+        commentTextAreaRef.value?.focus();
+        return;
+    }
+
+
+    commentForm.put
     (
         route('comments.update',
             {
@@ -102,11 +112,17 @@ const updateComment = () => commentForm.put
             }
         }
     );
+}
 
+const deleteComment = async (commentID) => {
+    if (! await confirmation('Are you sure you want to delete this comment?')) {
+        return;
+    }
 
-const deleteComment = (commentID) => router.delete(route('comments.destroy', { comment: commentID, page: props.comments.meta.current_page }),
+    router.delete(route('comments.destroy', { comment: commentID, page: props.comments.meta.current_page }),
     {
         preserveScroll: true,
-    });
+    }); 
+};
 
 </script>
