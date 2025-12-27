@@ -27,7 +27,7 @@ Route::middleware([
     Route::resource('posts.comments', CommentController::class)->shallow()->only([
         'store', 'update', 'destroy'
     ]);
-    Route::resource('posts', PostController::class)->only(['store']);
+    Route::resource('posts', PostController::class)->only(['create','store']);
     // Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
     // Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     // Route::put('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
