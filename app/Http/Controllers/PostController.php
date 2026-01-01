@@ -6,6 +6,7 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Str;
 
 class PostController extends Controller
 {
@@ -20,8 +21,11 @@ class PostController extends Controller
         ]);
     }
 
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
+        if(!Str::contains($post->showRoute(), $request->path())){
+            return redirect($post->showRoute($request->query()), 301);
+        }
         // dd(CommentResource::collection($post->comments()->with('user')->latest()->latest('id')->paginate(5)));
         $post->load('user');
 
@@ -43,7 +47,7 @@ class PostController extends Controller
             'user_id' => $request->user()->id,
         ]);
         
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect($post->showRoute());
     }
 
     public function create(){

@@ -7,6 +7,7 @@ use function Pest\Laravel\actingAs;
 
 
 beforeEach(function(){
+    
     $this->validData = [
         'title' => 'My First Post',
         'body' => 'This is the body of my first post This is the body of my first post. This is the body of my first post..',

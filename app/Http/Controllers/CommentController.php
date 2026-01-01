@@ -27,7 +27,7 @@ class CommentController extends Controller
             ->post()->associate($post)
             ->save();
 
-        return redirect()->route('posts.show', $post)->banner('Comment created successfully.');
+        return redirect($post->showRoute())->banner('Comment created successfully.');
         // below is the same thing as above
         // return redirect()->route('posts.show', $post)->with('flash', ['bannerStyle' => 'success', 'banner'=>'Comment added']);
     }
@@ -36,7 +36,7 @@ class CommentController extends Controller
     {
         $comment->delete();
 
-        return redirect()->route('posts.show', ['post' => $comment->post, 'page' => $request->query('page')])->banner('Comment deleted successfully.');
+        return redirect($comment->post->showRoute(['page' => $request->query('page')]))->banner('Comment deleted successfully.');
     }
 
     public function update(Request $request, Comment $comment)
@@ -46,6 +46,6 @@ class CommentController extends Controller
         ]));
 
         $comment->update($date);
-        return redirect()->route('posts.show', ['post' => $comment->post, 'page' => $request->query('page')])->banner('Comment updated successfully.');
+        return redirect($comment->post->showRoute(['page' => $request->query('page')]))->banner('Comment updated successfully.');
     }
 }
