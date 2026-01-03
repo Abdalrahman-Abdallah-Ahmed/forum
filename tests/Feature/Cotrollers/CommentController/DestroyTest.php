@@ -21,11 +21,9 @@ it('can delete a comment', function () {
 it('redirects to post page', function () {
     $comment = Comment::factory()->create();
 
-    $response = $this
-        ->actingAs($comment->user)
-        ->delete(route('comments.destroy', $comment));
-
-    $response->assertRedirect(route('posts.show', $comment->post));
+    $this->actingAs($comment->user)
+        ->delete(route('comments.destroy', $comment))
+        ->assertRedirect($comment->post->showRoute());
 });
 
 it('prevents unauthorized deletion', function () {
@@ -59,5 +57,5 @@ it('redirects to post page with the page query parameter', function () {
         ->actingAs($comment->user)
         ->delete(route('comments.destroy', ['comment' => $comment, 'page' => 3]));
 
-    $response->assertRedirect(route('posts.show', ['post' => $comment->post, 'page' => 3]));
+    $response->assertRedirect($comment->post->showRoute(['page' => 3]));
 });

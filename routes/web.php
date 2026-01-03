@@ -33,7 +33,7 @@ Route::middleware([
     // Route::put('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 });
 
-Route::get('posts/{post}/{slug?}', [PostController::class, 'show'])->name('posts.show');
+Route::get('posts/{post}/{slug}', [PostController::class, 'show'])->name('posts.show');
 Route::resource('posts', PostController::class)->only(['index']);
 
 
