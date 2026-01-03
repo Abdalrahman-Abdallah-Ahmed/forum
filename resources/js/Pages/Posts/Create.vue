@@ -10,7 +10,8 @@
                 </div>
                 <div class="mt-6">
                     <InputLabel for="body" class="sr-only">Body</InputLabel>
-                    <TextArea id="body" v-model="form.body" rows="25"/>
+                    <MarkdownEditor v-model="form.body"/>
+                    <TextArea id="body" v-model="form.body" rows="25" class="mt-2"/>
                     <InputError :message="form.errors.body" class="mt-1" />
                 </div>
                 <div class="mt-3">
@@ -32,6 +33,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Container from '@/Components/Container.vue';
+import MarkdownEditor from '@/Components/MarkdownEditor.vue';
 
 
 
