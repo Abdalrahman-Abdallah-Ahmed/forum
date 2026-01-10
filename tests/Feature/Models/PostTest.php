@@ -22,3 +22,8 @@ it('can generate additional query parameters on the show route', function () {
     expect($post->showRoute(['page' => 2]))->toBe(route('posts.show', [$post, \Str::slug($post->title), 'page' => 2]));
 
 });
+
+it('generates html from markdown body', function(){
+    $post = Post::factory()->create(['body' => "# Hello World"]);
+    expect($post->html)->toEqual(str($post->body)->markdown());
+})->only();

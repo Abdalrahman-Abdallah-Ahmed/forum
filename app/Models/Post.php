@@ -11,12 +11,12 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+    protected $guarded = [];
 
-    protected $fillable = [
-        'title',
-        'body',
-        'user_id',
-    ];
+    protected static function booted()
+    {
+        static::saving(fn(self $post)=> $post->fill(['html'=>str($post->body)->markdown()]));
+    }    
 
     public function user()
     {
