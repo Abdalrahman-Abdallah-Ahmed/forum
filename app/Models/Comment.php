@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ConvertMarkdownToHTML;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,10 +10,9 @@ class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
+    use ConvertMarkdownToHTML;
 
-    protected $fillable = [
-        'body',
-    ];
+   protected $guarded = [];
 
     public function user(){
         return $this->belongsTo(User::class);

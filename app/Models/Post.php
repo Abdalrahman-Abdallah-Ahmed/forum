@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ConvertMarkdownToHTML;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,12 +12,8 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    protected $guarded = [];
-
-    protected static function booted()
-    {
-        static::saving(fn(self $post)=> $post->fill(['html'=>str($post->body)->markdown()]));
-    }    
+    use ConvertMarkdownToHTML;
+    protected $guarded = [];   
 
     public function user()
     {
