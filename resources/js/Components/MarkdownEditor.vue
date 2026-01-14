@@ -11,6 +11,7 @@
             <li><button @click="() => editor.chain().focus().toggleHeading({ level: 2 }).run()"  type="button" class="px-3 py-2" :class="[editor.isActive('heading', { level: 2 }) ? 'bg-indigo-500 text-white':'hover:bg-gray-200']" title="Heading 1"><i class="ri-h-1"></i></button></li>
             <li><button @click="() => editor.chain().focus().toggleHeading({ level: 3 }).run()"  type="button" class="px-3 py-2" :class="[editor.isActive('heading', { level: 3 }) ? 'bg-indigo-500 text-white':'hover:bg-gray-200']" title="Heading 2"><i class="ri-h-2"></i></button></li>
             <li><button @click="() => editor.chain().focus().toggleHeading({ level: 4 }).run()"  type="button" class="px-3 py-2" :class="[editor.isActive('heading', { level: 4 }) ? 'bg-indigo-500 text-white':'hover:bg-gray-200']" title="Heading 3"><i class="ri-h-3"></i></button></li>
+            <slot name="toolbar" :editor="editor"></slot>
         </menu>
         <EditorContent :editor="editor" />
     </div>
