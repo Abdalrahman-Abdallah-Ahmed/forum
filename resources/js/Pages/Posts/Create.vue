@@ -1,7 +1,9 @@
 <template>
     <AppLayout title="Create a Post">
         <Container>
-            <h1 class="text-2xl font-bold ">Create a Post</h1>
+            <PageHeading>
+                Create a Post 
+            </PageHeading>
             <form @submit.prevent="createPost" class="mt-6">
                 <div>
                     <InputLabel for="title" class="sr-only">Title</InputLabel>
@@ -39,6 +41,7 @@ import Container from '@/Components/Container.vue';
 import MarkdownEditor from '@/Components/MarkdownEditor.vue';
 import axios from 'axios';
 import { isInProduction } from '@/utilities/environmint';
+import PageHeading from '@/Components/PageHeading.vue';
 
 
 

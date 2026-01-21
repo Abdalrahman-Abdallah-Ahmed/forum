@@ -30,6 +30,7 @@
         "date-fns": "^4.1.0",
         "prosemirror-state": "^1.4.4",
         "remixicon": "^4.8.0",
-        "tiptap-markdown": "^0.9.0"
+        "tiptap-markdown": "^0.9.0",
+        "ziggy-js": "^2.6.0"
     }
 }

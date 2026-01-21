@@ -1,7 +1,9 @@
 <template>
     <AppLayout :title="post.title">
         <Container>
-            <h1 class="text-2xl font-bold ">{{ post.title }}</h1>
+            <PageHeading>
+                {{ post.title }}
+            </PageHeading>
             <span class="block mt-1 text-sm text-gray-600 ">{{ formattedDate }} by {{ post.user.name }}</span>
 
             <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
@@ -53,6 +55,7 @@ import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useConfirm } from '@/utilities/Composables/useConfirm';
 import MarkdownEditor from '@/Components/MarkdownEditor.vue';
+import PageHeading from '@/Components/PageHeading.vue';
 
 const props = defineProps([
     'post',
