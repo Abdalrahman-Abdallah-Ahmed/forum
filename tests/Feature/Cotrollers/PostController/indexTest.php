@@ -7,6 +7,7 @@ use App\Models\Topic;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Inertia\Testing\AssertableInertia;
+use Pest\Plugins\Only;
 
 it('should return the correct component', function () {
     $this->get(route('posts.index'))
@@ -21,6 +22,13 @@ it('passes posts to the view', function () {
     $this->get(route('posts.index'))
         ->assertHasPaginatedResource('posts', PostResource::Collection($posts->reverse()));
 });
+
+it('passes topics to the view' , function(){
+    $topics = Topic::factory(3)->create();
+
+    $this->get(route('posts.index'))
+     ->assertHasResource('topics', TopicResource::Collection($topics));
+})->only();
 
 it('it can filter to a topic', function () {
 
@@ -40,5 +48,5 @@ it('passes the selected topic to the view', function () {
 
     $this->get(route('posts.index', ['topic'=>$topic]))
         ->assertHasResource('selectedTopic', TopicResource::make($topic));
-})->only();
+});
  

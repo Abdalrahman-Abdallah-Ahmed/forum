@@ -5,8 +5,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { relativeDate } from '@/utilities/date';
 import PageHeading from '@/Components/PageHeading.vue';
+import Bills from '@/Components/Bills.vue';
 
-defineProps(['posts', 'selectedTopic']);
+defineProps(['posts','topics', 'selectedTopic']);
 
 const formattedDate = (post) => {return relativeDate(post.created_at);}
 
@@ -16,9 +17,20 @@ const formattedDate = (post) => {return relativeDate(post.created_at);}
     <AppLayout>
         <Container>
             <div>
-                <Link :href="route('posts.index')" class="text-indigo-500 hover:text-indigo-700 block mb-2">Back to all Posts</Link>
                 <PageHeading v-text="selectedTopic ? selectedTopic.name : 'All Posts'"/>
                 <p v-if="selectedTopic" class="mt-1 text-gray-600 text-sm">{{ selectedTopic.description }}</p>
+                <menu class="flex space-x-1 mt-3 overflow-x-auto pb-2 pt-1">
+                    <li><Bills
+                        :filled="!selectedTopic"  
+                        :href="route('posts.index')">All Posts</Bills></li>
+                    <li v-for="topic in topics" :key="topic.id">
+                    <Bills
+                    :filled="topic.id === selectedTopic?.id" 
+                    :href="route('posts.index', {topic: topic.slug})">
+                        {{ topic.name }}
+                    </Bills>
+                    </li>
+                </menu>
             </div>
             <ul class="divide-y mt-4">
                 <li v-for="post in posts.data" :key="post.id" class="flex justify-between items-baseline flex-col md:flex-row">
@@ -27,9 +39,10 @@ const formattedDate = (post) => {return relativeDate(post.created_at);}
                         <span class="block mt-1 text-sm text-gray-600 ">{{ formattedDate(post) }} by {{
                             post.user.name}}</span>
                     </Link>
-                    <Link :href="route('posts.index', {topic: post.topic.slug})" class="rounded-full py-0.5 px-2 border border-pink-500 text-pink-500 hover:bg-indigo-500 hover:text-indigo-50">
+                    <Bills 
+                    :href="route('posts.index', {topic: post.topic.slug})">
                         {{ post.topic.name }}
-                    </Link>
+                    </Bills>
                 </li>
             </ul>
             <Pagination :meta="posts.meta" />
