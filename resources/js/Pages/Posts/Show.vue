@@ -1,7 +1,8 @@
 <template>
     <AppLayout :title="post.title">
         <Container>
-            <PageHeading>
+            <Bills :href="route('posts.index', {topic: post.topic.slug})">{{ post.topic.name }}</Bills>
+            <PageHeading class="mt-2">
                 {{ post.title }}
             </PageHeading>
             <span class="block mt-1 text-sm text-gray-600 ">{{ formattedDate }} by {{ post.user.name }}</span>
@@ -56,6 +57,7 @@ import { ref } from 'vue';
 import { useConfirm } from '@/utilities/Composables/useConfirm';
 import MarkdownEditor from '@/Components/MarkdownEditor.vue';
 import PageHeading from '@/Components/PageHeading.vue';
+import Bills from '@/Components/Bills.vue';
 
 const props = defineProps([
     'post',

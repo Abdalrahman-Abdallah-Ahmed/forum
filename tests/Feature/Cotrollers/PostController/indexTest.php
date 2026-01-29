@@ -28,7 +28,7 @@ it('passes topics to the view' , function(){
 
     $this->get(route('posts.index'))
      ->assertHasResource('topics', TopicResource::Collection($topics));
-})->only();
+});
 
 it('it can filter to a topic', function () {
 

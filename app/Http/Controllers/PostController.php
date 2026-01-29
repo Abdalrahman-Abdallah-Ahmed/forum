@@ -37,7 +37,7 @@ class PostController extends Controller
             return redirect($post->showRoute($request->query()), 301);
         }
         // dd(CommentResource::collection($post->comments()->with('user')->latest()->latest('id')->paginate(5)));
-        $post->load('user');
+        $post->load('user', 'topic');
 
         return inertia('Posts/Show', [
             'post' => fn() => PostResource::make($post),
@@ -62,6 +62,8 @@ class PostController extends Controller
     }
 
     public function create(){
-        return inertia('Posts/Create');
+        return inertia('Posts/Create', [
+            'topics' => fn () => TopicResource::collection(Topic::all()),
+        ]);
     }
 }
