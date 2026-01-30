@@ -55,6 +55,8 @@ const props = defineProps({
     }
 })
 
+const only = computed(()=> props.only.length === 0 ? [] : [...props.only, 'jetstream'])
+
 const previousPage = computed(() =>
     props.meta.links.find(link => link.label.toLowerCase().includes('previous'))
 )
