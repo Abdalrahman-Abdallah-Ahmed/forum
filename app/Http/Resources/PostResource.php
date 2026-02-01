@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Number;
 
 class PostResource extends JsonResource
 {
@@ -20,7 +21,8 @@ class PostResource extends JsonResource
             'topic' => $this->whenLoaded('topic', fn() => TopicResource::make($this->topic)),
             'title' => $this->title,
             'body' => $this->body,
-            'html' => $this->html,     
+            'html' => $this->html,
+            'likes_count' => Number::abbreviate(number: $this->likes_count),     
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'routes' => [

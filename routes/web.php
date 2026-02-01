@@ -35,3 +35,5 @@ Route::middleware([
 
 Route::get('posts/{topic?}', [PostController::class, 'index'])->name('posts.index');
 Route::get('posts/{post}/{slug}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('info', fn ()=> phpinfo());

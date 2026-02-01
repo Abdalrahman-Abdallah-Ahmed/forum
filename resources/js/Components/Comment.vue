@@ -8,7 +8,7 @@
                     <p class="mt-1 truncate text-xs/5 text-gray-400">{{ comment.user.email }}</p>
                     <div v-html="comment.html" class="mt-1 prose prose-sm max-w-none "></div>
                     <span class="block mt-1 text-xs text-gray-600 ">By {{ comment.user.name }} {{
-                        relativeDate(comment.created_at) }}</span>
+                        relativeDate(comment.created_at) }}  | <span class="text-pink-500">{{ comment.likes_count }} Likes</span></span>
                     <div class="mt-1 flex justify-end space-x-3 empty:hidden">
                         <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)" >
                             <button class="text-xs ">

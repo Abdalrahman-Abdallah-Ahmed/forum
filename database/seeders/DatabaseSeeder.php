@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
@@ -27,13 +28,21 @@ class DatabaseSeeder extends Seeder
             ->recycle([$users, $topics])
             ->create();
 
-        User::factory()
-            ->has(
-                Post::factory(5)->recycle($topics)->has(Comment::factory(15)->recycle($posts))
+        $abdo = User::factory()
+            ->has(Post::factory(5)->recycle($topics)
+            ->has(Comment::factory(15)->recycle($posts))
             )
             ->create([
                 'name' => 'Abdo',
                 'email' => 'aboodabdallah38@gmail.com',
             ]);
+
+        $posts->take(100)->each(function ($post) use ($abdo) {
+            Like::factory()
+            ->forPost($post)
+            ->create([
+                'user_id' => $abdo->id,
+                ]);
+        });
     }
 }
