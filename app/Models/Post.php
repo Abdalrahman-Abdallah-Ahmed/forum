@@ -14,7 +14,14 @@ class Post extends Model
     use HasFactory;
     use ConvertMarkdownToHTML;
 
-    protected $guarded = [];   
+    protected $guarded = [];
+    
+    protected static function booted()
+{
+    static::creating(function ($model) {
+        logger('CREATING POST', $model->getAttributes());
+    });
+}
 
     public function user()
     {

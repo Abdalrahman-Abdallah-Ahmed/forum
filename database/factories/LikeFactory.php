@@ -14,8 +14,12 @@ class LikeFactory extends Factory
 {
     public function definition(): array
     {
+        $post = Post::factory()->create();
         return [
             'user_id' => User::factory(['email'=> 'test+'.Str::uuid().'@example.com']),
+            'likeable_type' => $post->getMorphClass(),
+            'likeable_id'=> $post->id,
+
         ];
     }
 

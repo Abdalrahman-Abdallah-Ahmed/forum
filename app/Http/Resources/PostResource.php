@@ -15,6 +15,7 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        
         return [
             'id' => $this->id,
             'user' => $this->whenLoaded('user', fn() => UserResource::make($this->user)),
@@ -22,7 +23,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'html' => $this->html,
-            'likes_count' => Number::abbreviate(number: $this->likes_count),     
+            'likes_count' => Number::abbreviate(number: $this->likes_count ? null : 0),     
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'routes' => [

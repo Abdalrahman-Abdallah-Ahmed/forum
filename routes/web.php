@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::middleware([
     // Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
     // Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     // Route::put('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::post('/likes/{type}/{id}', [LikeController::class, 'store'])->name('likes.store');
 });
 
 Route::get('posts/{topic?}', [PostController::class, 'index'])->name('posts.index');

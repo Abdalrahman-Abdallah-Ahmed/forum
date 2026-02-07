@@ -31,8 +31,13 @@ class PostFactory extends Factory
         ];
     }
 
-    public function withFixture(){
-
-        return $this->sequence(...PostFixtures::getFixtures());
-    }
+public function withFixture()
+{
+    return $this->state(function (array $attributes) {
+        return array_merge(
+            $attributes,
+            PostFixtures::getFixtures()->random()
+        );
+    });
+}
 }
