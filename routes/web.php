@@ -33,6 +33,7 @@ Route::middleware([
     // Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     // Route::put('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::post('/likes/{type}/{id}', [LikeController::class, 'store'])->name('likes.store');
+    Route::delete('/likes/{type}/{id}', [LikeController::class, 'destroy'])->name('likes.destroy');
 });
 
 Route::get('posts/{topic?}', [PostController::class, 'index'])->name('posts.index');

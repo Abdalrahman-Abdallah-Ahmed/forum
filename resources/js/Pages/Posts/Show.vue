@@ -11,6 +11,9 @@
             <span class="block mt-1 text-sm text-gray-600 ">{{ formattedDate }} by {{ post.user.name }}</span>
             <div class="mt-4 ">
                 <span class=" text-pink-500 font-bold">{{ post.likes_count }} Likes</span>
+                <div>
+                    <Link :href="route('likes.store', ['post', post.id])" method="post">Like</Link>
+                </div>
             </div>
 
             <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
@@ -55,7 +58,7 @@ import TextArea from '@/Components/TextArea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { relativeDate } from '@/utilities/date';
 import { router } from '@inertiajs/vue3';
