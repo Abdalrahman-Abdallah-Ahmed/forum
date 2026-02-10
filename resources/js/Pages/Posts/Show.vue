@@ -11,8 +11,15 @@
             <span class="block mt-1 text-sm text-gray-600 ">{{ formattedDate }} by {{ post.user.name }}</span>
             <div class="mt-4 ">
                 <span class=" text-pink-500 font-bold">{{ post.likes_count }} Likes</span>
-                <div>
-                    <Link :href="route('likes.store', ['post', post.id])" method="post">Like</Link>
+                <div class="mt-2" v-if="$page.props.auth.user">
+                    <Link v-if="post.can.like" :href="route('likes.store', ['post', post.id])" method="post" class="inline-block bg-indigo-600 hover:bg-pink-600 transition-colors text-white py-1.5 px-3 rounded-full">
+                        <HandThumbUpIcon class="size-4 inline-block mr-1"/>
+                        Like
+                    </Link>
+                    <Link v-else :href="route('likes.destroy', ['post', post.id])" method="delete" class="inline-block bg-indigo-600 hover:bg-pink-600 transition-colors text-white py-1.5 px-3 rounded-full">
+                        <HandThumbDownIcon class="size-4 inline-block mr-1"/>
+                        Unlike
+                    </Link>
                 </div>
             </div>
 
@@ -67,6 +74,7 @@ import { useConfirm } from '@/utilities/Composables/useConfirm';
 import MarkdownEditor from '@/Components/MarkdownEditor.vue';
 import PageHeading from '@/Components/PageHeading.vue';
 import Bills from '@/Components/Bills.vue';
+import {HandThumbUpIcon, HandThumbDownIcon} from '@heroicons/vue/20/solid/index.js';
 
 const props = defineProps([
     'post',

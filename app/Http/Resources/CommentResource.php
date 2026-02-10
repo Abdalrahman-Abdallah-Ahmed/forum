@@ -8,11 +8,12 @@ use Number;
 
 class CommentResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    private bool $withLikePermision = false;
+    public function withLikePermision(): self
+    {
+        $this->withLikePermision = true;
+        return $this;
+    }
     public function toArray(Request $request): array
     {
         return [
@@ -21,12 +22,14 @@ class CommentResource extends JsonResource
             'post'=>$this->WhenLoaded('post', fn () => PostResource::make($this->post)),
             'body'=>$this->body,
             'html'=>$this->html,
-            'likes_count' => Number::abbreviate(number: $this->likes_count ? null : 0),     
+            'likes_count' => Number::abbreviate($this->likes_count),     
             'updated_at'=>$this->updated_at,
             'created_at'=>$this->created_at,
             'can' => [
                 'delete' => $request->user()?->can('delete', $this->resource),
-                'update' => $request->user()?->can('update', $this->resource),          ]
+                'update' => $request->user()?->can('update', $this->resource),
+                'like'=> $this->when($this->withLikePermision, fn()=>$request->user()?->can('create', [Like::class, $this->resource])),          
+            ],
         ];
     }
 }

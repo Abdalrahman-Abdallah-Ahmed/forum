@@ -2,17 +2,20 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Number;
 
 class PostResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    private bool $withLikePermision = false;
+    public function withLikePermision(): self
+    {
+        $this->withLikePermision = true;
+        return $this;
+    }
+
     public function toArray(Request $request): array
     {
         
@@ -28,7 +31,10 @@ class PostResource extends JsonResource
             'updated_at' => $this->updated_at,
             'routes' => [
                 'show'=> $this->showRoute()
-            ]
+            ],
+            'can'=>[
+                'like'=> $this->when($this->withLikePermision, fn()=>$request->user()?->can('create', [Like::class, $this->resource])),
+            ],
         ];
     }
 }
