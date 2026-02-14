@@ -20,7 +20,7 @@ it('passes a post to the view', function () {
 
     $response = $this->get($post->showRoute());
 
-    $response->assertHasResource('post', PostResource::make($post));
+    $response->assertHasResource('post', PostResource::make($post)->withLikePermision());
 });
 
 it('passes comments to the view', function () {
@@ -30,8 +30,13 @@ it('passes comments to the view', function () {
 
     $comments->load('user');
 
+    $expectedResource = CommentResource::collection($comments->reverse());
+    $expectedResource
+            ->collection
+            ->transform(fn(CommentResource $resource)=> $resource->withLikePermision());
+
     $this->get($post->showRoute())
-        ->assertHasPaginatedResource('comments', CommentResource::collection($comments->reverse()));
+        ->assertHasPaginatedResource('comments', $expectedResource);
 });
 
 it('will redirect if the slug is incorrect', function (string $incorrectSlug) {
