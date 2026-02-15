@@ -2,23 +2,31 @@
 import Container from '@/Components/Container.vue';
 import Pagination from '@/Components/Pagination.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { relativeDate } from '@/utilities/date';
 import PageHeading from '@/Components/PageHeading.vue';
 import Bills from '@/Components/Bills.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 
 const props = defineProps(['posts','topics', 'selectedTopic', 'query']);
+
+const page = usePage();
 
 const formattedDate = (post) => {return relativeDate(post.created_at);}
 const searchForm = useForm({
     query:props.query,
+    page:1
 
 });
 
-const search = () => searchForm.get(route('posts.index'))
+const search = () => searchForm.get(page.url);
+const clearSearch = () => {
+    searchForm.query = '';
+    search();
+}
 
 </script>
 
@@ -31,11 +39,11 @@ const search = () => searchForm.get(route('posts.index'))
                 <menu class="flex space-x-1 mt-3 overflow-x-auto pb-2 pt-1">
                     <li><Bills
                         :filled="!selectedTopic"  
-                        :href="route('posts.index')">All Posts</Bills></li>
+                        :href="route('posts.index', {query: searchForm.query})">All Posts</Bills></li>
                     <li v-for="topic in topics" :key="topic.id">
                     <Bills
                     :filled="topic.id === selectedTopic?.id" 
-                    :href="route('posts.index', {topic: topic.slug})">
+                    :href="route('posts.index', {topic: topic.slug, query: searchForm.query})">
                         {{ topic.name }}
                     </Bills>
                     </li>
@@ -46,6 +54,7 @@ const search = () => searchForm.get(route('posts.index'))
                         <div class="flex space-x-2 mt-1">
                             <TextInput v-model="searchForm.query" id="query" class="w-full"></TextInput>
                             <SecondaryButton type="submit">Search</SecondaryButton>
+                            <DangerButton v-if="searchForm.query" @click="clearSearch">Clear</DangerButton>
                         </div>
                     </div>
                 </form>

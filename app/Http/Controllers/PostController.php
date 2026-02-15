@@ -25,7 +25,8 @@ class PostController extends Controller
                 ->whereAny(['title','body'], 'like', '%'.$request->query('query').'%'))
             ->latest()
             ->latest('id')
-            ->paginate();
+            ->paginate()
+            ->withQueryString();
         return inertia('Posts/Index', [
             'posts' => PostResource::collection($posts),
             'topics' => fn () => TopicResource::collection(Topic::all()),
